@@ -1,19 +1,17 @@
 #include "ESP8266WiFi.h"
 #include "WiFiClientSecure.h"
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <ESP8266WiFi.h>
-#include <BlynkSimpleEsp8266.h>
 
 int sensorPin = A0;
 int sensorPinRed = D2;
 int sensorPinGreen = D3;
 
-const char* ssid = "kku-wifi@true";
-const char* pass = NULL;
-String sensor_id = "0";
-const char *host = "nrdev.kku.ac.th";
-const int httpsPort = 443;
-String Link = "/soil0";
+const char* ssid = "xxxxx";//Your wifi name
+const char* pass = "xxxxx";//Your wifi password
+String sensor_id = "x";//id
+const char *host = "xxxxx";//URL Server
+const int httpsPort = xxx;//port
+String Link = "/xxxxx";//Link connect to node red
 const char fingerprint[] PROGMEM = "60 7F F1 02 28 6C 22 61 6A F0 8B 50 66 43 06 C3 D5 B3 67 BC";
 String payload;
 
@@ -24,19 +22,15 @@ void setup() {
   pinMode(sensorPinRed, OUTPUT);
   pinMode(sensorPinGreen, OUTPUT);
 
-  Blynk.begin(auth, "vivo 1801", "12345678");
   WiFi.begin(ssid, pass);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-
   Serial.println("");
   Serial.println("WiFi Connected");
   Serial.print("IP Address : ");
   Serial.println(WiFi.localIP());
-  
-
 }
 
 void loop() {
@@ -59,7 +53,6 @@ void loop() {
   }
   
   delay(1000); 
-
   
   WiFiClientSecure httpsClient;
   httpsClient.setFingerprint(fingerprint);
@@ -77,13 +70,10 @@ void loop() {
                          "Connection: close\r\n\r\n")))
   {
     Serial.println("POST-OK!!!");
-      //Serial.println(Humidity);
   }
   else
   {
     Serial.println("POST-Failed!!!");
   }
   delay(1000);
-    //Serial.println(Humidity);
-  Blynk.run();
 }
